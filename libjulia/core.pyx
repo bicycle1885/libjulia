@@ -62,9 +62,9 @@ cdef jl_value_t* py2jl(object py_value):
         return jl_nothing
     elif isinstance(v, bool):
         if v:
-            return jl_box_bool(1)
+            return jl_true
         else:
-            return jl_box_bool(0)
+            return jl_false
     elif isinstance(v, int):
         return jl_box_int64(<int64_t>v)
     elif isinstance(v, float):

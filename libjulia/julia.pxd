@@ -28,8 +28,8 @@ cdef extern from "julia.h":
     ctypedef struct jl_module_t
 
     # singleton values
-    #jl_value_t* jl_true
-    #jl_value_t* jl_false
+    jl_value_t* jl_true
+    jl_value_t* jl_false
     jl_value_t* jl_nothing
     jl_tuple_t* jl_null
 
