@@ -1,4 +1,5 @@
 *.pyc
+*.so
 /.Python
 /bin
 /build
