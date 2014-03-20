@@ -31,6 +31,8 @@ f = jl.get_base_function("gamma")
 assert f(1.0) == math.gamma(1.0)
 f = jl.get_base_function("sum")
 assert f((1, 2, 3.2)) == 6.2
+arr = np.arange(12).astype("int64")
+assert f(arr) == arr.sum()
 
 ## module loading
 base = jl.load_base_module()
