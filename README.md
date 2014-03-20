@@ -17,6 +17,7 @@ assert jl.eval_string("1") is 1
 assert jl.eval_string("1.2") == 1.2
 assert jl.eval_string("4 * 10") == 40
 assert jl.eval_string("sqrt(10)") == math.sqrt(10)
+assert jl.eval_string("(1, 2, 3.2)") == (1, 2, 3.2)
 
 ## function calling
 f = jl.eval_string("() -> 10")
@@ -28,6 +29,8 @@ assert f(2, 1)
 assert not f(1, 2)
 f = jl.get_base_function("gamma")
 assert f(1.0) == math.gamma(1.0)
+f = jl.get_base_function("sum")
+assert f((1, 2, 3.2)) == 6.2
 
 ## module loading
 base = jl.load_base_module()
