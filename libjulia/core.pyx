@@ -56,7 +56,9 @@ cdef class Module:
 # jl2py: Julia  => Python
 
 cdef jl_value_t* py2jl(object py_value):
-    cdef object v = py_value
+    cdef:
+        object v = py_value
+        jl_tuple_t* tpl
 
     if v is None:
         return jl_nothing
@@ -69,6 +71,11 @@ cdef jl_value_t* py2jl(object py_value):
         return jl_box_int64(<int64_t>v)
     elif isinstance(v, float):
         return jl_box_float64(<double>v)
+    elif isinstance(v, tuple):
+        tpl = jl_alloc_tuple(<size_t>len(v))
+        for i in range(len(v)):
+            jl_tupleset(tpl, i, py2jl(v[i]))
+        return <jl_value_t*>tpl
 
     raise TypeError("the type of the python value is not supported")
 
@@ -76,6 +83,7 @@ cdef jl_value_t* py2jl(object py_value):
 cdef object jl2py(jl_value_t* jl_value):
     cdef:
         jl_value_t* v = jl_value
+        size_t i, length
         Function f
 
     if jl_is_nothing(v):
@@ -94,14 +102,22 @@ cdef object jl2py(jl_value_t* jl_value):
         return <float>jl_unbox_float32(v)
     elif jl_is_float64(v):
         return <double>jl_unbox_float64(v)
+    elif jl_is_tuple(v):
+        length = jl_tuple_len(<jl_tuple_t*>v)
+        tpl = []
+        for i in range(length):
+            tpl.append(jl2py(jl_tupleref(<jl_tuple_t*>v, i)))
+        return tuple(tpl)
     elif jl_is_function(v):
         f = Function()
         f.set_function(<jl_function_t*>v)
         return f
-    elif jl_is_array(v):
-        pass
 
     raise TypeError("the type of the julia value is not supported")
+
+
+cdef jl_value_t* ndarray2jlarray(array):
+    pass
 
 
 def init(julia_home_dir=None):
