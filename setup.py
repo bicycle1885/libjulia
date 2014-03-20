@@ -24,9 +24,15 @@ def julia_include_dirs(julia_home):
 
     return [join(julia_home, "..", "..", *r) for r in relatives] + ["."]
 
+
+def numpy_include_dirs():
+    return [np.get_include()]
+
+
 core = Extension("core",
                  [join("libjulia", "core.pyx")],
-                 include_dirs=julia_include_dirs(julia_home),
+                 include_dirs=(julia_include_dirs(julia_home)
+                               + numpy_include_dirs()),
                  libraries=["julia"],
                  runtime_library_dirs=[join(julia_home, "..", "lib")],
                  define_macros=[])

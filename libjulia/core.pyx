@@ -2,6 +2,7 @@ from libc.stdlib cimport malloc, free
 import numpy as np
 cimport numpy as np
 from julia cimport *
+from dtypes cimport nptype2jltype
 
 
 ### Wrappers
@@ -134,9 +135,10 @@ cdef jl_tuple_t* shape2dims(np.npy_intp* shape, np.npy_intp ndim):
 cdef jl_array_t* nparray2jlarray(np.ndarray arr):
     cdef:
         np.npy_intp ndim = arr.ndim
-        jl_value_t* atype = jl_apply_array_type(jl_int64_type, ndim)
+        jl_datatype_t* dtype = nptype2jltype(np.PyArray_TYPE(arr))
+        #jl_value_t* atype = jl_apply_array_type(jl_int64_type, ndim)
+        jl_value_t* atype = jl_apply_array_type(dtype, ndim)
 
-    #return jl_ptr_to_array(atype, np.PyArray_DATA(arr), <jl_tuple_t*>py2jl(shape), 0)
     return jl_ptr_to_array(atype, np.PyArray_DATA(arr), shape2dims(arr.shape, ndim), 0)
 
 
