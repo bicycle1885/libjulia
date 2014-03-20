@@ -1,4 +1,6 @@
 from libc.stdlib cimport malloc, free
+import numpy as np
+cimport numpy as np
 from julia cimport *
 
 
@@ -76,6 +78,8 @@ cdef jl_value_t* py2jl(object py_value):
         for i in range(len(v)):
             jl_tupleset(tpl, i, py2jl(v[i]))
         return <jl_value_t*>tpl
+    elif isinstance(v, np.ndarray):
+        return <jl_value_t*>nparray2jlarray(v)
 
     raise TypeError("the type of the python value is not supported")
 
@@ -116,8 +120,24 @@ cdef object jl2py(jl_value_t* jl_value):
     raise TypeError("the type of the julia value is not supported")
 
 
-cdef jl_value_t* ndarray2jlarray(array):
-    pass
+cdef jl_tuple_t* shape2dims(np.npy_intp* shape, np.npy_intp ndim):
+    cdef:
+        size_t i
+        jl_tuple_t* tpl = jl_alloc_tuple(<size_t>ndim)
+
+    for i in range(ndim):
+        jl_tupleset(tpl, i, jl_box_int64(shape[i]))
+
+    return tpl
+
+
+cdef jl_array_t* nparray2jlarray(np.ndarray arr):
+    cdef:
+        np.npy_intp ndim = arr.ndim
+        jl_value_t* atype = jl_apply_array_type(jl_int64_type, ndim)
+
+    #return jl_ptr_to_array(atype, np.PyArray_DATA(arr), <jl_tuple_t*>py2jl(shape), 0)
+    return jl_ptr_to_array(atype, np.PyArray_DATA(arr), shape2dims(arr.shape, ndim), 0)
 
 
 def init(julia_home_dir=None):

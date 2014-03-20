@@ -2,6 +2,7 @@ import os
 from sys import exit
 from setuptools import setup, Extension
 from Cython.Build import cythonize
+import numpy as np
 
 try:
     julia_home = os.environ["JULIA_HOME"]
@@ -35,5 +36,6 @@ setup(
     description="Python binding library for libjulia",
     author="Kenta Sato",
     packages=["libjulia"],
+    include_dirs=[np.get_include()],
     ext_modules=cythonize(core)
 )

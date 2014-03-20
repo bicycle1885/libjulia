@@ -27,6 +27,91 @@ cdef extern from "julia.h":
     ctypedef struct jl_tvar_t
     ctypedef struct jl_module_t
 
+    # types
+    jl_datatype_t *jl_any_type
+    jl_datatype_t *jl_type_type
+    jl_tvar_t     *jl_typetype_tvar
+    jl_datatype_t *jl_typetype_type
+    jl_value_t    *jl_ANY_flag
+    jl_datatype_t *jl_undef_type
+    jl_datatype_t *jl_typename_type
+    jl_datatype_t *jl_typector_type
+    jl_datatype_t *jl_sym_type
+    jl_datatype_t *jl_symbol_type
+    jl_tuple_t *jl_tuple_type
+    jl_value_t *jl_tupletype_type
+    jl_datatype_t *jl_ntuple_type
+    jl_typename_t *jl_ntuple_typename
+    jl_datatype_t *jl_tvar_type
+    jl_datatype_t *jl_task_type
+
+    jl_datatype_t *jl_uniontype_type
+    jl_datatype_t *jl_datatype_type
+
+    jl_value_t *jl_bottom_type
+    jl_value_t *jl_top_type
+    jl_datatype_t *jl_lambda_info_type
+    jl_datatype_t *jl_module_type
+    jl_datatype_t *jl_vararg_type
+    jl_datatype_t *jl_function_type
+    jl_datatype_t *jl_abstractarray_type
+    jl_datatype_t *jl_storedarray_type
+    jl_datatype_t *jl_densearray_type
+    jl_datatype_t *jl_array_type
+    jl_typename_t *jl_array_typename
+    jl_datatype_t *jl_weakref_type
+    jl_datatype_t *jl_ascii_string_type
+    jl_datatype_t *jl_utf8_string_type
+    jl_datatype_t *jl_errorexception_type
+    jl_datatype_t *jl_loaderror_type
+    jl_datatype_t *jl_typeerror_type
+    jl_datatype_t *jl_methoderror_type
+    jl_datatype_t *jl_undefvarerror_type
+    jl_value_t *jl_stackovf_exception
+    jl_value_t *jl_memory_exception
+    jl_value_t *jl_diverror_exception
+    jl_value_t *jl_domain_exception
+    jl_value_t *jl_overflow_exception
+    jl_value_t *jl_inexact_exception
+    jl_value_t *jl_undefref_exception
+    jl_value_t *jl_interrupt_exception
+    jl_value_t *jl_bounds_exception
+    jl_value_t *jl_an_empty_cell
+
+    jl_datatype_t *jl_bool_type
+    jl_datatype_t *jl_char_type
+    jl_datatype_t *jl_int8_type
+    jl_datatype_t *jl_uint8_type
+    jl_datatype_t *jl_int16_type
+    jl_datatype_t *jl_uint16_type
+    jl_datatype_t *jl_int32_type
+    jl_datatype_t *jl_uint32_type
+    jl_datatype_t *jl_int64_type
+    jl_datatype_t *jl_uint64_type
+    jl_datatype_t *jl_float32_type
+    jl_datatype_t *jl_float64_type
+    jl_datatype_t *jl_floatingpoint_type
+    jl_datatype_t *jl_number_type
+    jl_datatype_t *jl_voidpointer_type
+    jl_datatype_t *jl_pointer_type
+
+    jl_value_t *jl_array_uint8_type
+    jl_value_t *jl_array_any_type
+    jl_value_t *jl_array_symbol_type
+    jl_datatype_t *jl_expr_type
+    jl_datatype_t *jl_symbolnode_type
+    jl_datatype_t *jl_getfieldnode_type
+    jl_datatype_t *jl_linenumbernode_type
+    jl_datatype_t *jl_labelnode_type
+    jl_datatype_t *jl_gotonode_type
+    jl_datatype_t *jl_quotenode_type
+    jl_datatype_t *jl_newvarnode_type
+    jl_datatype_t *jl_topnode_type
+    jl_datatype_t *jl_intrinsic_type
+    jl_datatype_t *jl_methtable_type
+    jl_datatype_t *jl_method_type
+    jl_datatype_t *jl_task_type
+
     # singleton values
     jl_value_t* jl_true
     jl_value_t* jl_false

@@ -1,5 +1,6 @@
 import math
 import os
+import numpy as np
 import libjulia as jl
 
 
@@ -27,6 +28,11 @@ if __name__ == '__main__':
     assert f(1.0) == math.gamma(1.0)
     f = jl.get_base_function("sum")
     assert f((1, 2, 3.2)) == 6.2
+    arr = np.array([1, 2, 3, 4, 5, 6])
+    assert f(arr) == 21
+    assert f(arr.reshape(2, 3)) == 21
+    assert f(arr.reshape(3, 2)) == 21
+    assert f(arr.reshape(6, 1, 1)) == 21
 
     ## module loading
     base = jl.load_base_module()
